@@ -1,0 +1,21 @@
+python train.py \
+    --model_name_or_path vinai/bartpho-syllable \
+    --do_train \
+    --do_eval \
+    --do_predict \
+    --source_lang corrupted \
+    --target_lang full \
+    --train_file data/train.json \
+    --validation_file data/valid.json \
+    --test_file data/valid.json \
+    --output_dir ~/dynamic_blocking/task_adaption_model/v3/ \
+    --per_device_train_batch_size=16 \
+    --per_device_eval_batch_size=16 \
+    --overwrite_output_dir \
+    --predict_with_generate \
+    --save_total_limit 3 \
+    --evaluation_strategy epoch \
+    --save_strategy epoch \
+    --load_best_model_at_end True \
+    --metric_for_best_model eval_loss \
+    --num_train_epochs 10

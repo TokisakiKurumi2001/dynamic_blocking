@@ -8,7 +8,7 @@ def write_to_file(file_name, input, label):
     with open(file_name, "w+") as file:
         for inp, lab in zip(input, label):
             output = {"translation": {"corrupted": inp, "full": lab}}
-            file.write(json.dumps(output))
+            file.write(json.dumps(output, ensure_ascii=False))
             file.write("\n")
 
 

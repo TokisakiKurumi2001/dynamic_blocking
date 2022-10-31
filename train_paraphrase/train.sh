@@ -1,5 +1,5 @@
 python train.py \
-    --model_name_or_path facebook/bart-base \
+    --model_name_or_path vinai/bartpho-syllable-base \
     --do_train \
     --do_eval \
     --do_predict \
@@ -7,7 +7,7 @@ python train.py \
     --target_lang full \
     --train_file data/train.json \
     --validation_file data/valid.json \
-    --test_file data/valid.json \
+    --test_file data/test.json \
     --output_dir ~/dynamic_blocking/paraphrase_model/v1/ \
     --per_device_train_batch_size=16 \
     --per_device_eval_batch_size=16 \

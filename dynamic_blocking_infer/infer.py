@@ -1,12 +1,12 @@
-from transformers import BartTokenizer, BartForConditionalGeneration, LogitsProcessorList
+from transformers import BartphoTokenizer, MBartForConditionalGeneration, LogitsProcessorList
 from DBLogitsProcessor import DBLogitsProcessor
 import pandas as pd
 import re
 
 class DBInference:
     def __init__(self):
-        self.tokenizer = BartTokenizer.from_pretrained("model/v2")
-        self.model = BartForConditionalGeneration.from_pretrained("model/v2")
+        self.tokenizer = BartphoTokenizer.from_pretrained("model")
+        self.model = MBartForConditionalGeneration.from_pretrained("model")
 
     def __normalize_output(self, sent: str) -> str:
         """
@@ -31,6 +31,7 @@ class DBInference:
                 input_ids = self.tokenizer(line, return_tensors="pt").input_ids
                 outputs = self.model.generate(
                     input_ids=input_ids,
+                    num_beams=4,
                     logits_processor=LogitsProcessorList(
                         [DBLogitsProcessor(input_ids, threshold_p=0.3)
                     ]))
@@ -43,4 +44,4 @@ class DBInference:
 
 if __name__ == "__main__":
     db_infernce = DBInference()
-    db_infernce("predictions.txt")
+    db_infernce("generated_predictions.txt")

@@ -9,13 +9,14 @@ python train.py \
     --train_file data/train.json \
     --validation_file data/valid.json \
     --test_file data/test.json \
-    --max_seq_length 256 \
+    --max_source_length 512 \
+    --max_target_length 128 \
     --output_dir ~/dynamic_blocking/task_adaption_model/vit5/v1 \
     --per_device_train_batch_size=8 \
     --per_device_eval_batch_size=8 \
     --overwrite_output_dir \
     --predict_with_generate \
-    --save_total_limit 3 \
+    --save_total_limit 2 \
     --evaluation_strategy epoch \
     --save_strategy epoch \
     --load_best_model_at_end True \

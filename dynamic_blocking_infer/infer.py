@@ -1,12 +1,13 @@
-from transformers import BartphoTokenizer, MBartForConditionalGeneration, LogitsProcessorList
+from transformers import T5Tokenizer, T5ForConditionalGeneration, LogitsProcessorList
 from DBLogitsProcessor import DBLogitsProcessor
 import pandas as pd
 import re
+import torch
 
 class DBInference:
     def __init__(self):
-        self.tokenizer = BartphoTokenizer.from_pretrained("model")
-        self.model = MBartForConditionalGeneration.from_pretrained("model")
+        self.tokenizer = T5Tokenizer.from_pretrained("model")
+        self.model = T5ForConditionalGeneration.from_pretrained("model").to(device=torch.device('cuda:1'))
 
     def __normalize_output(self, sent: str) -> str:
         """
@@ -29,6 +30,7 @@ class DBInference:
             
                 line = re.sub("\n", "", line)
                 input_ids = self.tokenizer(line, return_tensors="pt").input_ids
+                input_ids = input_ids.to(device=torch.device('cuda:1'))
                 outputs = self.model.generate(
                     input_ids=input_ids,
                     num_beams=4,
@@ -43,5 +45,5 @@ class DBInference:
                 df.to_csv(f"infer_result/segment_{int(i/limit)+1}.csv", index=False)
 
 if __name__ == "__main__":
-    db_infernce = DBInference()
-    db_infernce("generated_predictions.txt")
+    db_inference = DBInference()
+    db_inference("data_vi.txt")

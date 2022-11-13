@@ -13,7 +13,7 @@ def write_to_file(file_name, input, label):
 
 if __name__ == "__main__":
     df = pd.DataFrame()
-    for i in range(1, 2+1):
+    for i in range(1, 14+1):
         _df = pd.read_csv(f'raw_data/segment_{i}.csv')
         df = pd.concat([df, _df], ignore_index=True)
         # print(len(df))
